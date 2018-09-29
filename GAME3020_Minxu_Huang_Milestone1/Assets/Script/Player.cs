@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour {
 	public FirstPersonController firstPerson;
 
-	public Transform target;
 	public Enemy enemy;
 
 	public GameObject battleCanvas;
@@ -18,6 +17,10 @@ public class Player : MonoBehaviour {
 	private float maxHealth = 20;
 	public float currentMana= 10;
 	private float maxMana=10;
+
+	public float strength = 2;
+	public float magicPower= 1;
+	public float defends=2; 
 
 	// Use this for initialization
 	void Start () {
@@ -50,7 +53,6 @@ public class Player : MonoBehaviour {
 			Screen.lockCursor = false;
 			firstPerson.enabled = false;
 			battleCanvas.SetActive(true);
-			transform.LookAt (target);
 		}
 	
 	}
@@ -62,15 +64,30 @@ public class Player : MonoBehaviour {
 		Screen.lockCursor = true;
 		firstPerson.enabled = true;
 		battleCanvas.SetActive(false);
+
+
 	}
 	public void attack(){
-		enemy.dealDmg (1);
+		enemy.dealDmg (1+strength);
 	}
-	public void Magic(){
+	public void fireBall(){
 		if (currentMana > 0) {
-			enemy.dealDmg (4);
-			currentMana -= 2;
+			enemy.dealDmg (4+magicPower);
+				currentMana -= 2;
 		}
 
+	}
+	public void increaseStrength(){
+		if (currentMana > 0) {
+			strength += magicPower;
+			currentMana -= 1;
+		}
+	}
+	public void levelUp(){
+		strength += 2;
+		magicPower += 2;
+		defends += 2;
+		maxHealth += 5;
+		maxMana += 5;
 	}
 }

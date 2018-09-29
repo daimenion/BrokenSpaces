@@ -110,7 +110,7 @@ MonoBehaviour:
   m_MinSize: {x: 713, y: 492}
   m_MaxSize: {x: 18008, y: 14042}
   vertical: 0
-  controlID: 5560
+  controlID: 107
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -159,7 +159,7 @@ MonoBehaviour:
   m_MinSize: {x: 234, y: 492}
   m_MaxSize: {x: 10004, y: 14042}
   vertical: 1
-  controlID: 5561
+  controlID: 108
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -348,7 +348,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 7804f2ffb0a8f4ff1ce3ffffe6fbffff000000001a2f0000262f0000602f0000f6920000
+    m_ExpandedIDs: 6039fdff087bfdff4afefdff8e01feffe6fbffff00000000bc2f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -398,14 +398,14 @@ MonoBehaviour:
     height: 343
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 7383.981430202513
+  lastFramingTime: 2493.8446145325956
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 339.0865, y: 103.77301, z: 39.84095}
+    m_Target: {x: -172.70749, y: 129.53258, z: -157.61568}
     speed: 2
-    m_Value: {x: 339.0865, y: 103.77301, z: 39.84095}
+    m_Value: {x: -172.70749, y: 129.53258, z: -157.61568}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -433,13 +433,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.24858424, y: 0.08905436, z: -0.02295874, w: -0.9642345}
+    m_Target: {x: -0.038953904, y: 0.29727474, z: -0.012139519, w: -0.9539198}
     speed: 2
-    m_Value: {x: -0.24858424, y: 0.08905436, z: -0.02295874, w: -0.9642345}
+    m_Value: {x: -0.038953904, y: 0.29727474, z: -0.012139519, w: -0.9539198}
   m_Size:
-    m_Target: 121.86134
+    m_Target: 972.78064
     speed: 2
-    m_Value: 121.86134
+    m_Value: 972.78064
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -555,20 +555,20 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/prefab
+    - Assets/Script
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/prefab
+  - Assets/Script
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\Jack huang\Documents\GitHub\first-person-turn-based-RPG\GAME3020_Minxu_Huang_Milestone1
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e42d0000
-    m_LastClickedID: 11748
-    m_ExpandedIDs: 000000003c2a0000862b0000e62d000000ca9a3b
+    scrollPos: {x: 0, y: 27}
+    m_SelectedIDs: be2b0000
+    m_LastClickedID: 11198
+    m_ExpandedIDs: 000000003c2a0000982b0000082e000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -596,7 +596,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000003c2a0000202b0000862b0000e62d000000ca9a3b
+    m_ExpandedIDs: 000000003c2a0000982b0000082e0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -623,7 +623,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000983f0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

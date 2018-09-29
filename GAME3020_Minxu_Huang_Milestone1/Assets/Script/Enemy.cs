@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour {
 	public float enemyCurrentHealth = 20;
 	private float enemyMaxHealth = 20;
 
-
+	public Transform target;
 
 	// Use this for initialization
 	void Start () {
@@ -26,14 +26,19 @@ public class Enemy : MonoBehaviour {
 		enemyCurrentHealth -= damage;
 		if (enemyCurrentHealth <= 0) {
 			Destroy (this.gameObject);
+			playerScrip.levelUp ();
 			playerScrip.reSet ();
 		}
 	}
 	public void attack(){
-		playerScrip.dealDmg (1);
+		playerScrip.dealDmg (3-playerScrip.defends);
 	}
 	public void Magic(){
-		playerScrip.dealDmg (3);
+		playerScrip.dealDmg (5-playerScrip.defends);
 	}
-
+	void OnTriggerEnter(Collider other){
+		if (other.tag == "Player") {
+			transform.LookAt (target);
+		}
+	}
 }

@@ -11,14 +11,21 @@ public class BattleSystem : MonoBehaviour {
 	public Enemy enemy;
 
 	private bool attackClick;
+	//magic clicked
 	private bool magicClick;
+	private bool spellClick;
+	private bool spellTwoClick;
+	//poition
 	private bool poitionClick;
 	private bool runAwayClick;
 	// Use this for initialization
 	private float enemyAttackChance;
+
+	public GameObject battleCanvas;
+	public GameObject magicCanvas;
 	void Start () {
-		playerTurn = true;
-		enemyTurn = true;
+		
+
 		whoIsFirst = Random.Range (0, 1);
 		attackClick = false ;
 		magicClick=false ;
@@ -32,10 +39,12 @@ public class BattleSystem : MonoBehaviour {
 	}
 	public void battle(){
 		if (whoIsFirst < 0.5) {
+			playerTurn = true;
 			playerTrun ();
 			wait ();
 			Invoke ("enemyTrun", 2);
 		} else {
+			enemyTurn = true;
 			enemyTrun ();
 			wait ();
 			Invoke ("playerTrun", 2);
@@ -46,17 +55,25 @@ public class BattleSystem : MonoBehaviour {
 	}
 
 	public void playerTrun(){
-		if (attackClick == true&&playerTurn == true) {	
+		if (attackClick == true && playerTurn == true) {	
 			player.attack ();
 			attackClick = false;
 			playerTurn = false;
 			enemyTurn = true;
-		} else if (magicClick == true&&playerTurn == true){
-			player.Magic();
-			magicClick = false;
+		}
+		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
+			spellClick = false;
 			playerTurn = false;
 			enemyTurn = true;
-		}else if (poitionClick == true&&playerTurn == true){
+			battleCanvas.SetActive(false);
+
+		} else if (playerTurn == true && player.currentMana > 0 && spellTwoClick == true) {
+			spellTwoClick = false;
+			playerTurn = false;
+			enemyTurn = true;
+			battleCanvas.SetActive(false);
+		}
+		else if (poitionClick == true&&playerTurn == true){
 			//player potion attack
 			poitionClick = false;
 			playerTurn = false;
@@ -86,11 +103,28 @@ public class BattleSystem : MonoBehaviour {
 		battle ();
 
 	}
+	//magic buttons
 	public void magicClicked(){
-		magicClick = true;
-		battle ();
+		if (enemyTurn == true) {
+			magicClick = false;
+			battleCanvas.SetActive(true);
+			magicCanvas.SetActive (false);
+		} else {
+			magicClick = true;
+			battleCanvas.SetActive(false);
+			magicCanvas.SetActive (true);
+		}
 
 	}
+	public void spellClicked(){
+		spellClick = true;
+		battle ();
+	}
+	public void spellTwoClicked(){
+		spellTwoClick = true;
+		battle ();
+	}
+	//poitions
 	public void poitionClicked(){
 		poitionClick = true;
 		battle ();
