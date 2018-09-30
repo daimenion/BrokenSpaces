@@ -8,7 +8,8 @@ public class BattleSystem : MonoBehaviour {
 	public bool enemyTurn;
 
 	public Player player;
-	public Enemy enemy;
+	public Enemy[] enemy;
+	public int enemies = 0;
 
 	private bool attackClick;
 	//magic clicked
@@ -56,22 +57,21 @@ public class BattleSystem : MonoBehaviour {
 
 	public void playerTrun(){
 		if (attackClick == true && playerTurn == true) {	
-			player.attack ();
 			attackClick = false;
 			playerTurn = false;
 			enemyTurn = true;
 		}
 		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
+
 			spellClick = false;
 			playerTurn = false;
 			enemyTurn = true;
-			battleCanvas.SetActive(false);
 
 		} else if (playerTurn == true && player.currentMana > 0 && spellTwoClick == true) {
+	
 			spellTwoClick = false;
 			playerTurn = false;
 			enemyTurn = true;
-			battleCanvas.SetActive(false);
 		}
 		else if (poitionClick == true&&playerTurn == true){
 			//player potion attack
@@ -88,17 +88,18 @@ public class BattleSystem : MonoBehaviour {
 
 	public void enemyTrun(){
 		if (enemyAttackChance > 1.5 && enemyTurn==true) {
-			enemy.attack ();
+			enemy[enemies].attack ();
 			enemyTurn = false;
 			playerTurn = true;
 		} else if (enemyAttackChance < 1.5 && enemyTurn==true){
-			enemy.Magic ();
+			enemy[enemies].Magic ();
 			enemyTurn = false;
 			playerTurn = true;
 		}
 	}
 
 	public void attackClicked(){
+		player.attack ();
 		attackClick = true;
 		battle ();
 

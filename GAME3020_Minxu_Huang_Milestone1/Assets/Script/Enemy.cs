@@ -10,7 +10,9 @@ public class Enemy : MonoBehaviour {
 	private float enemyMaxHealth = 20;
 
 	public Transform target;
-
+	public int dmg;
+	public int magicDmg;
+	public GameObject clone;
 	// Use this for initialization
 	void Start () {
 	 enemyCurrentHealth = 20;
@@ -25,16 +27,18 @@ public class Enemy : MonoBehaviour {
 	public void dealDmg(float damage){
 		enemyCurrentHealth -= damage;
 		if (enemyCurrentHealth <= 0) {
-			Destroy (this.gameObject);
 			playerScrip.levelUp ();
+			Destroy (this.gameObject);
 			playerScrip.reSet ();
+			clone.SetActive (true);
+			playerScrip.enemies += 1;
 		}
 	}
 	public void attack(){
-		playerScrip.dealDmg (3-playerScrip.defends);
+		playerScrip.dealDmg (dmg-playerScrip.defends);
 	}
 	public void Magic(){
-		playerScrip.dealDmg (5-playerScrip.defends);
+		playerScrip.dealDmg (magicDmg-playerScrip.defends);
 	}
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Player") {
