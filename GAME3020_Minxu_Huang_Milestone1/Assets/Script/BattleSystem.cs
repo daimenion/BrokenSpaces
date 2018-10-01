@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BattleSystem : MonoBehaviour {
 	public float whoIsFirst;
@@ -17,20 +18,28 @@ public class BattleSystem : MonoBehaviour {
 	private bool spellClick;
 	private bool spellTwoClick;
 	//poition
-	private bool poitionClick;
+	private bool potionClick;
+	private bool hpClick;
+	private bool manaClick;
+	//run away
 	private bool runAwayClick;
+	float runawayChance;
 	// Use this for initialization
 	private float enemyAttackChance;
 
 	public GameObject battleCanvas;
 	public GameObject magicCanvas;
+	public GameObject PotionCanvas;
+
+	public Text log;
+
 	void Start () {
 		
 
 		whoIsFirst = Random.Range (0, 1);
 		attackClick = false ;
 		magicClick=false ;
-		poitionClick=false ;
+		potionClick=false ;
 		runAwayClick=false ;
 	}
 	
@@ -40,12 +49,10 @@ public class BattleSystem : MonoBehaviour {
 	}
 	public void battle(){
 		if (whoIsFirst < 0.5) {
-			playerTurn = true;
 			playerTrun ();
 			wait ();
 			Invoke ("enemyTrun", 2);
 		} else {
-			enemyTurn = true;
 			enemyTrun ();
 			wait ();
 			Invoke ("playerTrun", 2);
@@ -57,32 +64,53 @@ public class BattleSystem : MonoBehaviour {
 
 	public void playerTrun(){
 		if (attackClick == true && playerTurn == true) {	
+			player.attack ();
 			attackClick = false;
 			playerTurn = false;
 			enemyTurn = true;
 		}
-		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
 
+
+		//magic
+		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
 			spellClick = false;
 			playerTurn = false;
 			enemyTurn = true;
 
 		} else if (playerTurn == true && player.currentMana > 0 && spellTwoClick == true) {
-	
 			spellTwoClick = false;
 			playerTurn = false;
 			enemyTurn = true;
 		}
-		else if (poitionClick == true&&playerTurn == true){
+
+
+		//potion
+		else if (hpClick == true&&playerTurn == true&&player.hpPotions >0){
 			//player potion attack
-			poitionClick = false;
+			player.drinkHPPotion();
+			hpClick = false;
 			playerTurn = false;
 			enemyTurn = true;
-		}else if (runAwayClick == true&&playerTurn == true){
-			//player runaway 
-			runAwayClick = false;
+		}else if (manaClick == true&&playerTurn == true&&player.manaPotions >0){
+			//player potion attack
+			player.drinkManaPotion();
+			manaClick = false;
 			playerTurn = false;
 			enemyTurn = true;
+		}
+		//player runaway 
+		else if (runAwayClick == true&&playerTurn == true){
+			runawayChance= Random.Range(0,10);
+			if (runawayChance > 1) {
+				runAwayClick = false;
+				playerTurn = false;
+				enemyTurn = true;
+			}
+			if (runawayChance< 1) {
+				runAwayClick = false;
+				battleCanvas.SetActive(false);
+				player.reSet ();
+			}
 		}
 	}
 
@@ -99,7 +127,6 @@ public class BattleSystem : MonoBehaviour {
 	}
 
 	public void attackClicked(){
-		player.attack ();
 		attackClick = true;
 		battle ();
 
@@ -126,11 +153,45 @@ public class BattleSystem : MonoBehaviour {
 		battle ();
 	}
 	//poitions
-	public void poitionClicked(){
-		poitionClick = true;
-		battle ();
+
+	public void potionClicked(){
+		
+		if (enemyTurn == true) {
+			potionClick = false;
+			battleCanvas.SetActive(true);
+			PotionCanvas.SetActive (false);
+		} else {
+			potionClick = true;
+			battleCanvas.SetActive(false);
+			PotionCanvas.SetActive (true);
+		}
 
 	}
+	public void hpClicked(){
+		hpClick = true;
+		if (player.hpPotions <= 0) {
+			battleCanvas.SetActive (false);
+			PotionCanvas.SetActive (true);
+		} else {
+			battleCanvas.SetActive(true);
+			PotionCanvas.SetActive (false);
+			battle ();
+		}
+	}
+	public void manaClicked(){
+		manaClick = true;
+		if (player.manaPotions <= 0) {
+			battleCanvas.SetActive (false);
+			PotionCanvas.SetActive (true);
+		} else {
+			battleCanvas.SetActive(true);
+			PotionCanvas.SetActive (false);
+			battle ();
+		}
+
+	}
+
+
 	public void runAwayClicked(){
 		runAwayClick = true;
 		battle ();

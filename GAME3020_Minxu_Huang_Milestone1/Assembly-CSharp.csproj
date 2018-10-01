@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Script\BattleSystem.cs" />
      <Compile Include="Assets\Script\Enemy.cs" />
+     <Compile Include="Assets\Script\MenuScirpt.cs" />
      <Compile Include="Assets\Script\Player.cs" />
  <Reference Include="UnityEditor.StandardEvents">
  <HintPath>C:/Users/Jack huang/Documents/GitHub/first-person-turn-based-RPG/GAME3020_Minxu_Huang_Milestone1/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>

@@ -13,6 +13,8 @@ public class Enemy : MonoBehaviour {
 	public int dmg;
 	public int magicDmg;
 	public GameObject clone;
+
+	public Text log;
 	// Use this for initialization
 	void Start () {
 	 enemyCurrentHealth = 20;
@@ -26,7 +28,9 @@ public class Enemy : MonoBehaviour {
 	}
 	public void dealDmg(float damage){
 		enemyCurrentHealth -= damage;
+		log.text = "enemy take "+damage+" damage";
 		if (enemyCurrentHealth <= 0) {
+			log.text= "enemy destry";
 			playerScrip.levelUp ();
 			Destroy (this.gameObject);
 			playerScrip.reSet ();
@@ -36,9 +40,13 @@ public class Enemy : MonoBehaviour {
 	}
 	public void attack(){
 		playerScrip.dealDmg (dmg-playerScrip.defends);
+		float dmgs = dmg -playerScrip.defends;
+		log.text = "Enemy attacked player and deals "+ dmgs+" damage";
 	}
 	public void Magic(){
 		playerScrip.dealDmg (magicDmg-playerScrip.defends);
+		float dmgs = magicDmg -playerScrip.defends;
+		log.text = "Enemy used magic against player and deals " + dmgs+" damage";
 	}
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Player") {

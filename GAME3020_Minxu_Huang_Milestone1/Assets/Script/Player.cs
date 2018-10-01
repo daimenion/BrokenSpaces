@@ -21,6 +21,13 @@ public class Player : MonoBehaviour {
 	public float magicPower= 1;
 	public float defends=2; 
 
+
+	public int hpPotions = 2;
+	public int manaPotions = 2;
+
+	public BattleSystem battle;
+
+	public Text log;
 	// Use this for initialization
 	void Start () {
 		currentHealth = 20;
@@ -31,14 +38,17 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-
 		hpBar.value = currentHealth;
 
 		manaBar.value = currentMana;
+		if (currentHealth > maxHealth)
+			currentHealth = maxHealth;
+		if (currentMana > maxMana)
+			currentMana = maxMana;
 	}
 	public void dealDmg(float damage){
 		currentHealth -= damage;
+		log.text = "player take : " + damage+" damage";
 		if (currentHealth<=0) {
 			//daelth scren;
 		}
@@ -54,6 +64,8 @@ public class Player : MonoBehaviour {
 			Screen.lockCursor = false;
 			firstPerson.enabled = false;
 			battleCanvas.SetActive(true);
+			battle.playerTurn = true;
+			log.text= "Encounter enemy!!";
 		}
 	
 	}
@@ -65,28 +77,58 @@ public class Player : MonoBehaviour {
 		Screen.lockCursor = true;
 		firstPerson.enabled = true;
 		battleCanvas.SetActive(false);
+		battle.playerTurn = false;
+		battle.enemyTurn = false;
 
 
 	}
 	public void attack(){
 		enemy[enemies].dealDmg (1+strength);
+		float dmg = 1 + strength;
+		log.text = "Player attack and deals " + dmg +" to enemy";
 	}
 	public void fireBall(){
 		if (currentMana > 0) {
 			enemy[enemies].dealDmg (4+magicPower);
+			float dmg = 1 + magicPower;
+			log.text = "Player uses fire ball and deals " + dmg +" to enemy";
 				currentMana -= 2;
+		} else {
+			log.text = "not enough mana";
 		}
 
 	}
 	public void increaseStrength(){
 		if (currentMana > 0) {
 			strength += magicPower;
+			log.text = "Player strength increase by " + magicPower;
 			currentMana -= 1;
+		} else {
+			log.text = "not enough mana";
 		}
 	}
 	public void levelUp(){
 		strength += 2;
 		magicPower += 2;
 		defends += 2;
+	}
+	public void drinkHPPotion(){
+		if (hpPotions > 0) {
+			currentHealth += 5;
+			log.text = "Player used hp potion and heals " + 5 + " hp";
+			hpPotions--;
+		} else if (hpPotions < 0) {
+			log.text= "No more hp potion ";
+		}
+	}
+	public void drinkManaPotion(){
+		if (manaPotions > 0) {
+			currentMana += 5;
+			log.text="Player used mana potion and heals " + 5+" mana";
+			manaPotions--;
+		}
+		else if (manaPotions < 0) {
+			log.text= "No more mana potion ";
+		}
 	}
 }
