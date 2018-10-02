@@ -15,6 +15,10 @@ public class Enemy : MonoBehaviour {
 	public GameObject clone;
 
 	public Text log;
+
+	public float speed;
+
+	public BattleSystem battle;
 	// Use this for initialization
 	void Start () {
 	 enemyCurrentHealth = 20;
@@ -25,17 +29,24 @@ public class Enemy : MonoBehaviour {
 
 		enemyhpBar.maxValue = enemyMaxHealth;
 		enemyhpBar.value = enemyCurrentHealth;
+
+		float step = speed * Time.deltaTime;
+
+		// Move our position a step closer to the target.
+		transform.position = Vector3.MoveTowards(transform.position, target.position, step);
 	}
 	public void dealDmg(float damage){
 		enemyCurrentHealth -= damage;
 		log.text = "enemy take "+damage+" damage";
 		if (enemyCurrentHealth <= 0) {
-			log.text= "enemy destry";
+			log.text= "enemy destroy";
 			playerScrip.levelUp ();
+			battle.Reset ();
 			Destroy (this.gameObject);
 			playerScrip.reSet ();
 			clone.SetActive (true);
-			playerScrip.enemies += 1;
+			playerScrip.enemies ++;
+			battle.enemies++;
 		}
 	}
 	public void attack(){
@@ -51,6 +62,7 @@ public class Enemy : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Player") {
 			transform.LookAt (target);
+			speed = 0;
 		}
 	}
 }

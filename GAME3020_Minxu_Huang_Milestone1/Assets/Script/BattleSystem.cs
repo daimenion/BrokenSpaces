@@ -10,7 +10,7 @@ public class BattleSystem : MonoBehaviour {
 
 	public Player player;
 	public Enemy[] enemy;
-	public int enemies = 0;
+	public int enemies;
 
 	private bool attackClick;
 	//magic clicked
@@ -51,7 +51,11 @@ public class BattleSystem : MonoBehaviour {
 		if (whoIsFirst < 0.5) {
 			playerTrun ();
 			wait ();
-			Invoke ("enemyTrun", 2);
+			enemyTurn = true;
+			if (enemyTurn==true) {
+				Invoke ("enemyTrun", 2);
+			}
+
 		} else {
 			enemyTrun ();
 			wait ();
@@ -67,7 +71,6 @@ public class BattleSystem : MonoBehaviour {
 			player.attack ();
 			attackClick = false;
 			playerTurn = false;
-			enemyTurn = true;
 		}
 
 
@@ -75,12 +78,10 @@ public class BattleSystem : MonoBehaviour {
 		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
 			spellClick = false;
 			playerTurn = false;
-			enemyTurn = true;
 
 		} else if (playerTurn == true && player.currentMana > 0 && spellTwoClick == true) {
 			spellTwoClick = false;
 			playerTurn = false;
-			enemyTurn = true;
 		}
 
 
@@ -90,13 +91,11 @@ public class BattleSystem : MonoBehaviour {
 			player.drinkHPPotion();
 			hpClick = false;
 			playerTurn = false;
-			enemyTurn = true;
 		}else if (manaClick == true&&playerTurn == true&&player.manaPotions >0){
 			//player potion attack
 			player.drinkManaPotion();
 			manaClick = false;
 			playerTurn = false;
-			enemyTurn = true;
 		}
 		//player runaway 
 		else if (runAwayClick == true&&playerTurn == true){
@@ -104,7 +103,6 @@ public class BattleSystem : MonoBehaviour {
 			if (runawayChance > 1) {
 				runAwayClick = false;
 				playerTurn = false;
-				enemyTurn = true;
 			}
 			if (runawayChance< 1) {
 				runAwayClick = false;
@@ -199,6 +197,14 @@ public class BattleSystem : MonoBehaviour {
 	}
 	IEnumerator wait(){
 		yield return new WaitForSeconds (1.0f);
+	}
+	public void Reset(){
+		playerTurn = false;
+		enemyTurn = false;
+		attackClick = false ;
+		magicClick=false ;
+		potionClick=false ;
+		runAwayClick=false ;
 	}
 
 }
