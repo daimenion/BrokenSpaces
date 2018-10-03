@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.Characters.FirstPerson;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour {
 	public FirstPersonController firstPerson;
 	public Enemy[] enemy;
@@ -28,6 +29,10 @@ public class Player : MonoBehaviour {
 	public BattleSystem battle;
 
 	public Text log;
+	public Text mana;
+	public Text HP;
+
+	int scene;
 	// Use this for initialization
 	void Start () {
 		currentHealth = 20;
@@ -45,6 +50,10 @@ public class Player : MonoBehaviour {
 			currentHealth = maxHealth;
 		if (currentMana > maxMana)
 			currentMana = maxMana;
+
+		mana.text = " " + currentMana;
+		HP.text = " " + currentHealth;
+		death ();
 	}
 	public void dealDmg(float damage){
 		currentHealth -= damage;
@@ -90,7 +99,7 @@ public class Player : MonoBehaviour {
 	public void fireBall(){
 		if (currentMana > 0) {
 			enemy[enemies].dealDmg (4+magicPower);
-			float dmg = 1 + magicPower;
+			float dmg = 4 + magicPower;
 			log.text = "Player uses fire ball and deals " + dmg +" to enemy";
 				currentMana -= 2;
 		} else {
@@ -117,7 +126,7 @@ public class Player : MonoBehaviour {
 			currentHealth += 5;
 			log.text = "Player used hp potion and heals " + 5 + " hp";
 			hpPotions--;
-		} else if (hpPotions < 0) {
+		} else if (hpPotions <= 0) {
 			log.text= "No more hp potion ";
 		}
 	}
@@ -127,8 +136,18 @@ public class Player : MonoBehaviour {
 			log.text="Player used mana potion and heals " + 5+" mana";
 			manaPotions--;
 		}
-		else if (manaPotions < 0) {
+		else if (manaPotions <= 0) {
 			log.text= "No more mana potion ";
 		}
+	}
+	public void death(){
+		if (currentHealth <= 0) {
+			scene = 2;
+			Invoke ("screenChange", 1);
+		}
+
+	}
+	public void screenChange(){
+		SceneManager.LoadScene (scene);
 	}
 }

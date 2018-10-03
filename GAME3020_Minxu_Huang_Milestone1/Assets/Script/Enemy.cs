@@ -22,6 +22,7 @@ public class Enemy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	 enemyCurrentHealth = 20;
+		battle.enemyTurn = false;
 	}
 	
 	// Update is called once per frame

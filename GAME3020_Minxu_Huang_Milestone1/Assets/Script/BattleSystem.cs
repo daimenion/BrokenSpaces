@@ -76,12 +76,18 @@ public class BattleSystem : MonoBehaviour {
 
 		//magic
 		else if (playerTurn == true && player.currentMana > 0 && spellClick == true ) {
-			spellClick = false;
-			playerTurn = false;
+				player.increaseStrength ();
+				spellClick = false;
+				playerTurn = false;
 
-		} else if (playerTurn == true && player.currentMana > 0 && spellTwoClick == true) {
-			spellTwoClick = false;
-			playerTurn = false;
+
+
+
+		} else if (playerTurn == true && player.currentMana >= 2 && spellTwoClick == true) {
+				player.fireBall ();
+				spellTwoClick = false;
+				playerTurn = false;
+	
 		}
 
 
@@ -144,11 +150,28 @@ public class BattleSystem : MonoBehaviour {
 	}
 	public void spellClicked(){
 		spellClick = true;
-		battle ();
+		if (player.currentMana>0) {
+			battleCanvas.SetActive(true);
+			magicCanvas.SetActive (false);
+			battle ();
+		} else if (player.currentMana <=0){
+			battleCanvas.SetActive(false);
+			magicCanvas.SetActive (true);
+		}
+
+
 	}
 	public void spellTwoClicked(){
 		spellTwoClick = true;
-		battle ();
+		if (player.currentMana>=2) {
+			battleCanvas.SetActive(true);
+			magicCanvas.SetActive (false);
+			battle ();
+		} else if (player.currentMana <2){
+			battleCanvas.SetActive(false);
+			magicCanvas.SetActive (true);
+		}
+			
 	}
 	//poitions
 
@@ -173,6 +196,8 @@ public class BattleSystem : MonoBehaviour {
 		} else {
 			battleCanvas.SetActive(true);
 			PotionCanvas.SetActive (false);
+			spellClick = false;
+			spellTwoClick = false;
 			battle ();
 		}
 	}
@@ -184,6 +209,8 @@ public class BattleSystem : MonoBehaviour {
 		} else {
 			battleCanvas.SetActive(true);
 			PotionCanvas.SetActive (false);
+			spellClick = false;
+			spellTwoClick = false;
 			battle ();
 		}
 
