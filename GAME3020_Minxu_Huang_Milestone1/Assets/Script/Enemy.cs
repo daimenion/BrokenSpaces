@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour {
 	public float speed;
 
 	public BattleSystem battle;
+	public Animator enemyAnim;
 	// Use this for initialization
 	void Start () {
 	 enemyCurrentHealth = 20;
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour {
 	}
 	public void dealDmg(float damage){
 		enemyCurrentHealth -= damage;
+		enemyAnim.Play ("Damage");
 		log.text = "enemy take "+damage+" damage";
 		if (enemyCurrentHealth <= 0) {
 			log.text= "enemy destroy";
