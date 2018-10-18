@@ -30,8 +30,10 @@ public class BattleSystem : MonoBehaviour {
 	public GameObject battleCanvas;
 	public GameObject magicCanvas;
 	public GameObject PotionCanvas;
+    public GameObject fire;
+    public GameObject spawpoint;
 
-	public Text log;
+    public Text log;
 
 	public Animator enemyAnim;
 	public Animator playerAnim;
@@ -69,8 +71,9 @@ public class BattleSystem : MonoBehaviour {
 	}
 
 	public void playerTrun(){
-		if (attackClick == true && playerTurn == true) {	
-			player.attack ();
+		if (attackClick == true && playerTurn == true) {
+            playerAnim.Play("attack");
+            player.attack ();
 			attackClick = false;
 			playerTurn = false;
 		}
@@ -86,9 +89,8 @@ public class BattleSystem : MonoBehaviour {
 
 
 		} else if (playerTurn == true && player.currentMana >= 2 && spellTwoClick == true) {
-				player.fireBall ();
-				spellTwoClick = false;
-				playerTurn = false;
+           Instantiate(fire.gameObject, spawpoint.transform.position, spawpoint.transform.rotation);
+            spellTwoClick = false;
 	
 		}
 
@@ -127,7 +129,8 @@ public class BattleSystem : MonoBehaviour {
 			enemyTurn = false;
 			playerTurn = true;
 		} else if (enemyAttackChance < 1.5 && enemyTurn==true){
-			enemy[enemies].Magic ();
+            enemyAnim.Play("attack");
+            enemy[enemies].Magic ();
 			enemyTurn = false;
 			playerTurn = true;
 		}

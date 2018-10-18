@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public Enemy[] enemy;
 	public int enemies = 0;
 	public GameObject battleCanvas;
+
 	//hp
 	public Slider hpBar;
 	public Slider manaBar;
@@ -18,7 +19,8 @@ public class Player : MonoBehaviour {
 	public float currentMana= 10;
 	private float maxMana=10;
 
-	public float strength = 2;
+	public float strength;
+    float maxStrength=2;
 	public float magicPower= 1;
 	public float defends=2; 
 
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour {
 		currentMana= 10;
 		manaBar.maxValue = maxMana;
 		hpBar.maxValue = maxHealth;
+        strength = maxStrength;
 	}
 	
 	// Update is called once per frame
@@ -88,6 +91,7 @@ public class Player : MonoBehaviour {
 		battleCanvas.SetActive(false);
 		battle.playerTurn = false;
 		battle.enemyTurn = false;
+        strength = maxStrength;
 
 
 	}
@@ -117,7 +121,7 @@ public class Player : MonoBehaviour {
 		}
 	}
 	public void levelUp(){
-		strength += 2;
+		maxStrength += 2;
 		magicPower += 2;
 		defends += 2;
 	}
