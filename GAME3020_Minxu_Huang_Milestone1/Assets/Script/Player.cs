@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
 	public Enemy[] enemy;
 	public int enemies = 0;
 	public GameObject battleCanvas;
-
+    public Animator shop;
 	//hp
 	public Slider hpBar;
 	public Slider manaBar;
@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
 
 	public int hpPotions = 2;
 	public int manaPotions = 2;
+    public int lvl=1;
 
 	public BattleSystem battle;
 
@@ -39,14 +40,16 @@ public class Player : MonoBehaviour {
 	void Start () {
 		currentHealth = 20;
 		currentMana= 10;
-		manaBar.maxValue = maxMana;
-		hpBar.maxValue = maxHealth;
-        strength = maxStrength;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		hpBar.value = currentHealth;
+        manaBar.maxValue = maxMana;
+        hpBar.maxValue = maxHealth;
+        strength = maxStrength;
+
+        hpBar.value = currentHealth;
 
 		manaBar.value = currentMana;
 		if (currentHealth > maxHealth)
@@ -69,18 +72,26 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter(Collider other){
 		if (other.tag == "Enemy") {
 
-			firstPerson.m_WalkSpeed = (0);
-			firstPerson.m_JumpSpeed = (0);
-			firstPerson.m_MouseLook.lockCursor = false;
-			Cursor.visible = true;
-			Screen.lockCursor = false;
-			firstPerson.enabled = false;
+            encounter();
 			battleCanvas.SetActive(true);
 			battle.playerTurn = true;
 			log.text= "Encounter enemy!!";
 		}
-	
-	}
+        if (other.tag == "Shop")
+        {
+            shop.Play("shopanim");
+            log.text = "Entered shop.";
+            Invoke("encounter",1.0f);
+        }
+    }
+    public void encounter() {
+        firstPerson.m_WalkSpeed = (0);
+        firstPerson.m_JumpSpeed = (0);
+        firstPerson.m_MouseLook.lockCursor = false;
+        Cursor.visible = true;
+        Screen.lockCursor = false;
+        firstPerson.enabled = false;
+    }
 	public void reSet(){
 		firstPerson.m_WalkSpeed = (5);
 		firstPerson.m_JumpSpeed = (10);
@@ -124,6 +135,11 @@ public class Player : MonoBehaviour {
 		maxStrength += 2;
 		magicPower += 2;
 		defends += 2;
+        maxHealth += 5;
+        currentHealth += 5;
+        maxMana += 3;
+        currentMana += 3;
+        lvl++;
 	}
 	public void drinkHPPotion(){
 		if (hpPotions > 0) {

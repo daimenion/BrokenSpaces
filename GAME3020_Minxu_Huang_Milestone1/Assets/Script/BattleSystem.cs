@@ -35,7 +35,7 @@ public class BattleSystem : MonoBehaviour {
 
     public Text log;
 
-	public Animator enemyAnim;
+	public Animator[] enemyAnim;
 	public Animator playerAnim;
 	void Start () {
 		
@@ -124,12 +124,12 @@ public class BattleSystem : MonoBehaviour {
 
 	public void enemyTrun(){
 		if (enemyAttackChance > 1.5 && enemyTurn==true) {
-			enemyAnim.Play ("attack");
+			enemyAnim[enemies].Play ("attack");
 			enemy[enemies].attack ();
 			enemyTurn = false;
 			playerTurn = true;
 		} else if (enemyAttackChance < 1.5 && enemyTurn==true){
-            enemyAnim.Play("attack");
+            enemyAnim[enemies].Play("attack");
             enemy[enemies].Magic ();
 			enemyTurn = false;
 			playerTurn = true;

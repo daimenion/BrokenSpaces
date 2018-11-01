@@ -24,7 +24,7 @@ public class FireBall : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        float step = 5 * Time.deltaTime;
+        float step = 10 * Time.deltaTime;
         transform.Translate(Vector3.forward*step);
     }
     public void OnTriggerEnter(Collider other)
