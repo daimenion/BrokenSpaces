@@ -114,11 +114,22 @@ public class Player : MonoBehaviour {
 		log.text = "Player attack and deals " + dmg +" to enemy";
 	}
 	public void fireBall(){
-		if (currentMana > 0) {
+		if (currentMana >= 2) {
 			enemy[enemies].dealDmg (4+magicPower);
 			float dmg = 4 + magicPower;
 			log.text = "Player uses fire ball and deals " + dmg +" to enemy";
 				currentMana -= 2;
+		} else {
+			log.text = "not enough mana";
+		}
+
+	}
+	public void lightingBolt(){
+		if (currentMana >= 4) {
+			enemy[enemies].dealDmg (7+magicPower);
+			float dmg = 7 + magicPower;
+			log.text = "Player uses lighting bolt and deals " + dmg +" to enemy";
+			currentMana -= 4;
 		} else {
 			log.text = "not enough mana";
 		}
@@ -139,8 +150,8 @@ public class Player : MonoBehaviour {
 		defends += 2;
         maxHealth += 5;
         currentHealth += 5;
-        maxMana += 3;
-        currentMana += 3;
+        maxMana += 5;
+        currentMana += 5;
         lvl++;
 	}
 	public void drinkHPPotion(){

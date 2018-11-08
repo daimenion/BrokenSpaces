@@ -59,7 +59,7 @@ public class BattleSystem : MonoBehaviour {
 			wait ();
 			enemyTurn = true;
 			if (enemyTurn==true) {
-				Invoke ("enemyTrun", 2);
+				Invoke ("enemyTrun", 2.5f);
 			}
 
 		} else {
@@ -95,7 +95,7 @@ public class BattleSystem : MonoBehaviour {
             spellTwoClick = false;
 	
 		}
-        else if (playerTurn == true && player.currentMana >= 2 && spellThreeClick == true)
+        else if (playerTurn == true && player.currentMana >= 4 && spellThreeClick == true)
         {
             Instantiate(lighting.gameObject, spawpointEnemy[enemies].transform.position, spawpointEnemy[enemies].transform.rotation);
             spellThreeClick = false;
@@ -177,11 +177,12 @@ public class BattleSystem : MonoBehaviour {
 	}
 	public void spellTwoClicked(){
 		spellTwoClick = true;
-        if (player.currentMana >= 2) {
+		if (player.currentMana >= 2) {
 			battleCanvas.SetActive(true);
 			magicCanvas.SetActive (false);
-            if (fire.active == false)
-			battle ();
+			if (fire.active == false) {
+				battle ();
+			}
 		} else if (player.currentMana <2){
 			battleCanvas.SetActive(false);
 			magicCanvas.SetActive (true);
@@ -191,18 +192,20 @@ public class BattleSystem : MonoBehaviour {
     public void spellThreeClicked()
     {
         spellThreeClick = true;
-        if (player.currentMana >= 2)
-        {
-            battleCanvas.SetActive(true);
-            magicCanvas.SetActive(false);
-            if (lighting.active == false)
-                battle();
-        }
-        else if (player.currentMana < 2)
-        {
-            battleCanvas.SetActive(false);
-            magicCanvas.SetActive(true);
-        }
+		if (player.currentMana >= 4 && player.lvl >= 3) {
+			battleCanvas.SetActive (true);
+			magicCanvas.SetActive (false);
+			if (lighting.active == false) {
+				battle ();
+			}
+		} else if (player.currentMana < 4) {
+			battleCanvas.SetActive (false);
+			magicCanvas.SetActive (true);
+		}
+		if (player.lvl < 3) {
+			log.text = "Not learned yet requrie Level 3";
+			spellThreeClick = false;
+		}
 
     }
     //poitions
@@ -230,6 +233,7 @@ public class BattleSystem : MonoBehaviour {
 			PotionCanvas.SetActive (false);
 			spellClick = false;
 			spellTwoClick = false;
+			spellThreeClick = false;
 			battle ();
 		}
 	}
@@ -243,6 +247,7 @@ public class BattleSystem : MonoBehaviour {
 			PotionCanvas.SetActive (false);
 			spellClick = false;
 			spellTwoClick = false;
+			spellThreeClick = false;
 			battle ();
 		}
 
