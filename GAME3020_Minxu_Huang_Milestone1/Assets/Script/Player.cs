@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
 	public int enemies = 0;
 	public GameObject battleCanvas;
     public Animator shop;
+    public Canvas shopcan;
 	//hp
 	public Slider hpBar;
 	public Slider manaBar;
@@ -20,7 +21,7 @@ public class Player : MonoBehaviour {
 	private float maxMana=10;
 
 	public float strength;
-    float maxStrength=2;
+    public float maxStrength=2;
 	public float magicPower= 1;
 	public float defends=2; 
 
@@ -77,11 +78,12 @@ public class Player : MonoBehaviour {
 			battle.playerTurn = true;
 			log.text= "Encounter enemy!!";
 		}
-        if (other.tag == "Shop")
+        else if (other.tag == "Shop")
         {
             shop.Play("shopanim");
-            log.text = "Entered shop.";
-            Invoke("encounter",1.0f);
+            log.text = "Welcome to the shop.";
+            shopcan.gameObject.SetActive(true);
+            encounter();
         }
     }
     public void encounter() {

@@ -12,6 +12,7 @@ public class Enemy : MonoBehaviour {
 	public Transform target;
 	public int dmg;
 	public int magicDmg;
+    public Shop sho;
 	public GameObject clone;
 
 	public Text log;
@@ -48,6 +49,7 @@ public class Enemy : MonoBehaviour {
 			Destroy (this.gameObject);
 			playerScrip.reSet ();
 			clone.SetActive (true);
+            sho.money += 30;
 			playerScrip.enemies ++;
 			battle.enemies++;
 		}

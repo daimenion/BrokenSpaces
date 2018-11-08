@@ -17,8 +17,9 @@ public class BattleSystem : MonoBehaviour {
 	private bool magicClick;
 	private bool spellClick;
 	private bool spellTwoClick;
-	//poition
-	private bool potionClick;
+    private bool spellThreeClick;
+    //poition
+    private bool potionClick;
 	private bool hpClick;
 	private bool manaClick;
 	//run away
@@ -32,7 +33,8 @@ public class BattleSystem : MonoBehaviour {
 	public GameObject PotionCanvas;
     public GameObject fire;
     public GameObject spawpoint;
-
+    public GameObject lighting;
+    public GameObject[] spawpointEnemy;
     public Text log;
 
 	public Animator[] enemyAnim;
@@ -93,10 +95,16 @@ public class BattleSystem : MonoBehaviour {
             spellTwoClick = false;
 	
 		}
+        else if (playerTurn == true && player.currentMana >= 2 && spellThreeClick == true)
+        {
+            Instantiate(lighting.gameObject, spawpointEnemy[enemies].transform.position, spawpointEnemy[enemies].transform.rotation);
+            spellThreeClick = false;
+
+        }
 
 
-		//potion
-		else if (hpClick == true&&playerTurn == true&&player.hpPotions >0){
+        //potion
+        else if (hpClick == true&&playerTurn == true&&player.hpPotions >0){
 			//player potion attack
 			player.drinkHPPotion();
 			hpClick = false;
@@ -169,9 +177,10 @@ public class BattleSystem : MonoBehaviour {
 	}
 	public void spellTwoClicked(){
 		spellTwoClick = true;
-		if (player.currentMana>=2) {
+        if (player.currentMana >= 2) {
 			battleCanvas.SetActive(true);
 			magicCanvas.SetActive (false);
+            if (fire.active == false)
 			battle ();
 		} else if (player.currentMana <2){
 			battleCanvas.SetActive(false);
@@ -179,9 +188,26 @@ public class BattleSystem : MonoBehaviour {
 		}
 			
 	}
-	//poitions
+    public void spellThreeClicked()
+    {
+        spellThreeClick = true;
+        if (player.currentMana >= 2)
+        {
+            battleCanvas.SetActive(true);
+            magicCanvas.SetActive(false);
+            if (lighting.active == false)
+                battle();
+        }
+        else if (player.currentMana < 2)
+        {
+            battleCanvas.SetActive(false);
+            magicCanvas.SetActive(true);
+        }
 
-	public void potionClicked(){
+    }
+    //poitions
+
+    public void potionClicked(){
 		
 		if (enemyTurn == true) {
 			potionClick = false;
