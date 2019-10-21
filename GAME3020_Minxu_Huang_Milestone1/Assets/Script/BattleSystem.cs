@@ -7,10 +7,11 @@ public class BattleSystem : MonoBehaviour {
 	public float whoIsFirst;
 	public bool playerTurn;
 	public bool enemyTurn;
-
+	public bool bossTurn;
 	public Player player;
-	public Enemy[] enemy;
+	public Enemy enemy;
 	public int enemies;
+	public Boss bos;
 
 	private bool attackClick;
 	//magic clicked
@@ -24,6 +25,7 @@ public class BattleSystem : MonoBehaviour {
 	private bool manaClick;
 	//run away
 	private bool runAwayClick;
+	public bool runaway;
 	float runawayChance;
 	// Use this for initialization
 	private float enemyAttackChance;
@@ -34,11 +36,17 @@ public class BattleSystem : MonoBehaviour {
     public GameObject fire;
     public GameObject spawpoint;
     public GameObject lighting;
-    public GameObject[] spawpointEnemy;
+    public GameObject spawpointEnemy;
+	public GameObject spawpointbos;
     public Text log;
+	public Text mana;
+	public Text heath;
 
-	public Animator[] enemyAnim;
+	public Animator enemyAnim;
+	public Animator bossAnim;
 	public Animator playerAnim;
+	public ParticleSystem boost;
+
 	void Start () {
 		
 
@@ -51,25 +59,74 @@ public class BattleSystem : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		heath.text = ": " + player.hpPotions;
+		mana.text = ": " + player.manaPotions;
 	}
 	public void battle(){
 		if (whoIsFirst < 0.5) {
 			playerTrun ();
 			wait ();
-			enemyTurn = true;
-			if (enemyTurn==true) {
-				Invoke ("enemyTrun", 2.5f);
+			if (player.boss) {
+				if (runaway)
+					bossTurn = false;
+				else 
+					bossTurn = true;
+				if (bossTurn == true) {
+					Invoke ("bossTrun", 2.5f);
+				}
+			} else {
+				if (runaway)
+					enemyTurn = false;
+				else 
+					enemyTurn = true;
+				if (enemyTurn == true) {
+					Invoke ("enemyTrun", 2.5f);
+				}
 			}
-
+				
 		} else {
-			enemyTrun ();
+			if (player.boss) {
+				bossTrun ();
+			} else {
+				enemyTrun ();
+			}
 			wait ();
 			Invoke ("playerTrun", 2);
 		}
 		enemyAttackChance = Random.Range (0, 10);
+	}
+	public void Abattle(){
+		if (whoIsFirst < 0.5) {
+			playerTrun ();
+			wait ();
+			if (player.boss) {
+				if (runaway)
+					bossTurn = false;
+				else 
+					bossTurn = true;
+				if (bossTurn == true) {
+					Invoke ("bossTrun", 1.0f);
+				}
+			} else {
+				if (runaway)
+					enemyTurn = false;
+				else 
+					enemyTurn = true;
+				if (enemyTurn == true) {
+					Invoke ("enemyTrun", 1.0f);
+				}
+			}
 
-	
+		} else {
+			if (player.boss) {
+				bossTrun ();
+			} else {
+				enemyTrun ();
+			}
+			wait ();
+			Invoke ("playerTrun", 2);
+		}
+		enemyAttackChance = Random.Range (0, 10);
 	}
 
 	public void playerTrun(){
@@ -87,18 +144,25 @@ public class BattleSystem : MonoBehaviour {
 				spellClick = false;
 				playerTurn = false;
 
-
-
-
 		} else if (playerTurn == true && player.currentMana >= 2 && spellTwoClick == true) {
-           Instantiate(fire.gameObject, spawpoint.transform.position, spawpoint.transform.rotation);
-            spellTwoClick = false;
+			if (player.boss) {
+				Instantiate (fire.gameObject, spawpoint.transform.position, spawpoint.transform.rotation);
+				spellTwoClick = false;
+			} else {
+				Instantiate (fire.gameObject, spawpoint.transform.position, spawpoint.transform.rotation);
+				spellTwoClick = false;
+			}
 	
 		}
         else if (playerTurn == true && player.currentMana >= 4 && spellThreeClick == true)
         {
-            Instantiate(lighting.gameObject, spawpointEnemy[enemies].transform.position, spawpointEnemy[enemies].transform.rotation);
-            spellThreeClick = false;
+			if (player.boss) {
+				Instantiate (lighting.gameObject, spawpointbos.transform.position, spawpointbos.transform.rotation);
+				spellThreeClick = false;
+			} else {
+				Instantiate (lighting.gameObject, spawpointEnemy.transform.position, spawpointEnemy.transform.rotation);
+				spellThreeClick = false;
+			}
 
         }
 
@@ -118,35 +182,58 @@ public class BattleSystem : MonoBehaviour {
 		//player runaway 
 		else if (runAwayClick == true&&playerTurn == true){
 			runawayChance= Random.Range(0,10);
-			if (runawayChance > 1) {
+			if (runawayChance > 5) {
+				runaway = false;
 				runAwayClick = false;
 				playerTurn = false;
+
 			}
-			if (runawayChance< 1) {
+			if (runawayChance< 5) {
+				runaway = true;
 				runAwayClick = false;
 				battleCanvas.SetActive(false);
 				player.reSet ();
+				Reset ();
+				player.inbattle = false;
 			}
 		}
 	}
 
 	public void enemyTrun(){
 		if (enemyAttackChance > 1.5 && enemyTurn==true) {
-			enemyAnim[enemies].Play ("attack");
-			enemy[enemies].attack ();
+			enemyAnim.Play ("attack2");
+			enemy.attack ();
 			enemyTurn = false;
 			playerTurn = true;
 		} else if (enemyAttackChance < 1.5 && enemyTurn==true){
-            enemyAnim[enemies].Play("attack");
-            enemy[enemies].Magic ();
+			enemyAnim.Play("attack");
+            enemy.Magic ();
 			enemyTurn = false;
+			playerTurn = true;
+		}
+	}
+	public void bossTrun(){
+		if (enemyAttackChance > 4.5 && bossTurn==true) {
+			bossAnim.Play ("attack_short_001");
+			bos.attack ();
+			bossTurn = false;
+			playerTurn = true;
+		} else if (enemyAttackChance < 4.5 &&enemyAttackChance > 1.5 && bossTurn==true){
+			bossAnim.Play("attack_short_001");
+			bos.Magic ();
+			bossTurn = false;
+			playerTurn = true;
+		}else if (enemyAttackChance < 1.5 && bossTurn==true){
+			bossAnim.Play("attack_short_001");
+			bos.heal();
+			bossTurn = false;
 			playerTurn = true;
 		}
 	}
 
 	public void attackClicked(){
 		attackClick = true;
-		battle ();
+		Abattle ();
 
 	}
 	//magic buttons
@@ -167,6 +254,7 @@ public class BattleSystem : MonoBehaviour {
 		if (player.currentMana>0) {
 			battleCanvas.SetActive(true);
 			magicCanvas.SetActive (false);
+			boost.Play ();
 			battle ();
 		} else if (player.currentMana <=0){
 			battleCanvas.SetActive(false);
@@ -180,9 +268,8 @@ public class BattleSystem : MonoBehaviour {
 		if (player.currentMana >= 2) {
 			battleCanvas.SetActive(true);
 			magicCanvas.SetActive (false);
-			if (fire.active == false) {
-				battle ();
-			}
+			battle ();
+			
 		} else if (player.currentMana <2){
 			battleCanvas.SetActive(false);
 			magicCanvas.SetActive (true);
@@ -195,9 +282,8 @@ public class BattleSystem : MonoBehaviour {
 		if (player.currentMana >= 4 && player.lvl >= 3) {
 			battleCanvas.SetActive (true);
 			magicCanvas.SetActive (false);
-			if (lighting.active == false) {
 				battle ();
-			}
+			
 		} else if (player.currentMana < 4) {
 			battleCanvas.SetActive (false);
 			magicCanvas.SetActive (true);
@@ -234,7 +320,7 @@ public class BattleSystem : MonoBehaviour {
 			spellClick = false;
 			spellTwoClick = false;
 			spellThreeClick = false;
-			battle ();
+			Abattle ();
 		}
 	}
 	public void manaClicked(){
@@ -248,7 +334,7 @@ public class BattleSystem : MonoBehaviour {
 			spellClick = false;
 			spellTwoClick = false;
 			spellThreeClick = false;
-			battle ();
+			Abattle ();
 		}
 
 	}
@@ -256,7 +342,7 @@ public class BattleSystem : MonoBehaviour {
 
 	public void runAwayClicked(){
 		runAwayClick = true;
-		battle ();
+		Abattle ();
 
 	}
 	IEnumerator wait(){
@@ -265,6 +351,7 @@ public class BattleSystem : MonoBehaviour {
 	public void Reset(){
 		playerTurn = false;
 		enemyTurn = false;
+		bossTurn = false;
 		attackClick = false ;
 		magicClick=false ;
 		potionClick=false ;

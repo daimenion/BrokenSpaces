@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class Enemy : MonoBehaviour {
 	public Player playerScrip;
 	public Slider enemyhpBar;
-	public float enemyCurrentHealth = 20;
-	private float enemyMaxHealth = 20;
+	public float enemyCurrentHealth ;
+	public float enemyMaxHealth ;
 
 	public Transform target;
 	public int dmg;
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour {
 	public Animator enemyAnim;
 	// Use this for initialization
 	void Start () {
-	 enemyCurrentHealth = 20;
+		enemyCurrentHealth = enemyMaxHealth;
 		battle.enemyTurn = false;
 	}
 	
@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour {
 
 		// Move our position a step closer to the target.
 		transform.position = Vector3.MoveTowards(transform.position, target.position, step);
+
 	}
 	public void dealDmg(float damage){
 		enemyCurrentHealth -= damage;
@@ -45,13 +46,14 @@ public class Enemy : MonoBehaviour {
 		if (enemyCurrentHealth <= 0) {
 			log.text= "enemy destroy";
 			playerScrip.levelUp ();
-			battle.Reset ();
-			Destroy (this.gameObject);
+			this.gameObject.SetActive (false);
+			enemyMaxHealth = 0;
 			playerScrip.reSet ();
-			clone.SetActive (true);
             sho.money += 30;
 			playerScrip.enemies ++;
 			battle.enemies++;
+			playerScrip.inbattle = false;
+			battle.Reset ();
 		}
 	}
 	public void attack(){
@@ -69,5 +71,10 @@ public class Enemy : MonoBehaviour {
 			transform.LookAt (target);
 			speed = 0;
 		}
+	}
+	public void levelup(){
+		dmg = 20;
+		magicDmg = 25;
+		enemyMaxHealth += 30;
 	}
 }

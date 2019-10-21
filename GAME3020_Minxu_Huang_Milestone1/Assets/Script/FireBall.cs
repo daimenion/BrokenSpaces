@@ -16,10 +16,20 @@ public class FireBall : MonoBehaviour {
 
         GameObject batl = GameObject.Find("battlesystem");
         battle = batl.GetComponent<BattleSystem>();
+		battle.enemyTurn = false;
+		battle.bossTurn = false;
+       
+		if (playerScrip.boss) {
+			GameObject ta = GameObject.FindGameObjectWithTag ("bos");
+			target = ta.transform;
+			this.transform.LookAt(target);
+		}
+		else{
+			GameObject tar = GameObject.FindGameObjectWithTag("Target");
+			target = tar.transform;
+			this.transform.LookAt(target);
+		}
 
-        GameObject tar = GameObject.FindGameObjectWithTag("Target");
-        target = tar.transform;
-        this.transform.LookAt(target);
     }
 	
 	// Update is called once per frame
@@ -34,6 +44,17 @@ public class FireBall : MonoBehaviour {
             Destroy(this.gameObject);
             playerScrip.fireBall();
             battle.playerTurn = false;
+			battle.enemyTurn = true;
+
+
         }
+		if (other.tag == "bos")
+		{
+			
+			Destroy(this.gameObject);
+			playerScrip.fireBall();
+			battle.playerTurn = false;
+			battle.bossTurn = true;
+		}
     }
 }

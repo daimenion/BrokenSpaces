@@ -7,6 +7,17 @@ TagManager:
   - Enemy
   - Target
   - Shop
+  - boss
+  - bos
+  - heal
+  - Door
+  - SafeDoor
+  - EnemyDoor
+  - BossDoor
+  - Door2
+  - Door3
+  - lighting
+  - Fire
   layers:
   - Default
   - TransparentFX

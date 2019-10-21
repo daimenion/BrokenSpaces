@@ -3,11 +3,17 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\Player.cs">
     <Files>
       <File FileName="Assets\Script\Enemy.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\Player.cs" Line="155" Column="15" />
-      <File FileName="Assets\Script\BattleSystem.cs" Line="206" Column="37" />
-      <File FileName="Assets\Script\MenuScirpt.cs" Line="1" Column="1" />
-      <File FileName="Assets\Script\FireBall.cs" Line="23" Column="6" />
-      <File FileName="Assets\Script\lightingbolt.cs" Line="28" Column="3" />
+      <File FileName="Assets\Script\Player.cs" Line="281" Column="64" />
+      <File FileName="Assets\Script\BattleSystem.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Shop.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Inventory.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Sword1.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Boss.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\FireBall.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\lightingbolt.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\Door.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\ring.cs" Line="1" Column="1" />
+      <File FileName="Assets\Script\explosion.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

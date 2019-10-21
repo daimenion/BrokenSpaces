@@ -17,9 +17,17 @@ public class lightingbolt : MonoBehaviour {
 
 		GameObject batl = GameObject.Find("battlesystem");
 		battle = batl.GetComponent<BattleSystem>();
+		battle.enemyTurn = false;
+		battle.bossTurn = false;
+		if (playerScrip.boss) {
+			GameObject ta = GameObject.FindGameObjectWithTag ("bos");
+			target = ta.transform;
+		}
+		else{
+			GameObject tar = GameObject.FindGameObjectWithTag("Target");
+			target = tar.transform;
+		}
 
-		GameObject tar = GameObject.FindGameObjectWithTag("Target");
-		target = tar.transform;
 	
 	}
 
@@ -32,8 +40,18 @@ public class lightingbolt : MonoBehaviour {
 		if (other.tag == "Target")
 		{
 			Destroy(this.gameObject);
-			playerScrip.lightingBolt();
+			playerScrip.fireBall();
 			battle.playerTurn = false;
+			battle.enemyTurn = true;
+
+		}
+		if (other.tag == "bos")
+		{
+			Destroy(this.gameObject);
+			playerScrip.fireBall();
+			battle.playerTurn = false;
+			battle.bossTurn = true;
+
 		}
 	}
 }

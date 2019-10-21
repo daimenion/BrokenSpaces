@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Shop : MonoBehaviour {
     public Player player;
-    public Canvas canvas;
     public bool elvenswordbuttons;
     public bool lightsaberbuttons;
     public bool hpbuttons;
@@ -15,9 +14,11 @@ public class Shop : MonoBehaviour {
 
     public GameObject sword;
     public GameObject elvensword;
+	public bool brought =false;
     public GameObject lightsaber;
-
+	public bool brought2=false;
     public Text log;
+	public Text inventlog;
     // Use this for initialization
     void Start () {
 
@@ -26,7 +27,7 @@ public class Shop : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         log.text = "Money: " + money;
-
+		inventlog.text = "Money: " + money;
 
        
        
@@ -34,26 +35,37 @@ public class Shop : MonoBehaviour {
     public void click()
     {
         elvenswordbuttons = true;
-        if (elvenswordbuttons && money >= 30)
+		if (!brought&&elvenswordbuttons && money >= 30)
         {
             sword.SetActive(false);
             elvensword.SetActive(true);
             lightsaber.SetActive(false);
             money -= 30;
-            player.maxStrength += 4;
+			brought = true;
         }
+		if (brought && elvenswordbuttons) {
+			sword.SetActive (false);
+			elvensword.SetActive (true);
+			lightsaber.SetActive (false);
+		}
     }
     public void swordclick()
     {
         lightsaberbuttons = true;
-        if (lightsaberbuttons && money >= 70)
+		if (!brought2&&lightsaberbuttons && money >= 70)
         {
             sword.SetActive(false);
             elvensword.SetActive(false);
             lightsaber.SetActive(true);
             money -= 70;
-            player.maxStrength += 10;
+			brought2 = true;
         }
+		if (brought2 && lightsaberbuttons) {
+			sword.SetActive (false);
+			elvensword.SetActive (false);
+			lightsaber.SetActive (true);
+		}
+
     }
     public void hpclick()
     {
